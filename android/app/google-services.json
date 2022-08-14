@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "664184116638",
+    "project_id": "unity-academy",
+    "storage_bucket": "unity-academy.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:664184116638:android:d1adacc73a0b47e2a5728f",
+        "android_client_info": {
+          "package_name": "unity.academy"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "664184116638-751uqurlugiq847b0pe5gb0thj3dq87l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCDm_lfV4bncBWSQ2KTYrorwjxhlyhvVoM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "664184116638-751uqurlugiq847b0pe5gb0thj3dq87l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
