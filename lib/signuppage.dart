@@ -85,7 +85,12 @@ class _SignUpPageState extends State<SignUpPage> {
                                 Usermanagement().storeNewUser(value, context))
                             // print(value))
                             .catchError((e) {
-                          print(e);
+                           showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return alert(e);
+                            },
+                          );
                         });
                       },
                     )),
@@ -108,3 +113,9 @@ class _SignUpPageState extends State<SignUpPage> {
             )));
   }
 }
+// Create AlertDialog
+  AlertDialog alert(e) => AlertDialog(
+    title: Text("Sign up failed!"),
+    content: Text(e.toString()),
+  );
+
