@@ -4,10 +4,13 @@ import 'package:flutter/cupertino.dart';
 
 class Usermanagement {
   CollectionReference ref = FirebaseFirestore.instance.collection('/users');
-  storeNewUser(UserCredential value, context) {
+  storeNewUser(UserCredential value, String role, context) {
     var email = value.user!.email;
     var pw = value.user!.uid;
-    ref.add({'email': email, 'password': pw}).then((value) {
+    var userrole = "";
+    (role == "Userrole.teacher") ? userrole = "teacher" : userrole = "student";
+      
+    ref.add({'email': email, 'password': pw, 'role': userrole}).then((value) {
       Navigator.of(context).pop();
       Navigator.pushNamed(context, '/landingpage');
     }).catchError((e) {

@@ -9,9 +9,12 @@ class SignUpPage extends StatefulWidget {
   State<SignUpPage> createState() => _SignUpPageState();
 }
 
+enum Userrole { student, teacher }
+
 class _SignUpPageState extends State<SignUpPage> {
   late String _email;
   late String _password;
+  Userrole? _role = Userrole.teacher;
 
   // TextEditingController nameController = TextEditingController();
   // TextEditingController passwordController = TextEditingController();
@@ -69,6 +72,34 @@ class _SignUpPageState extends State<SignUpPage> {
                         });
                       }),
                 ),
+                Column(
+                  children: <Widget>[
+                    ListTile(
+                      title: const Text('Teacher'),
+                      leading: Radio<Userrole>(
+                        value: Userrole.teacher,
+                        groupValue: _role,
+                        onChanged: (Userrole? value) {
+                          setState(() {
+                            _role = value;
+                          });
+                        },
+                      ),
+                    ),
+                    ListTile(
+                      title: const Text('Student'),
+                      leading: Radio<Userrole>(
+                        value: Userrole.student,
+                        groupValue: _role,
+                        onChanged: (Userrole? value) {
+                          setState(() {
+                            _role = value;
+                          });
+                        },
+                      ),
+                    ),
+                  ],
+                ),
                 Container(
                     height: 50,
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -78,14 +109,15 @@ class _SignUpPageState extends State<SignUpPage> {
                         // print(nameController.text);
                         // print(passwordController.text);
                         print("pw:" + _password + "| email :" + _email);
+                        print(_role.toString());
                         FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: _email, password: _password)
                             .then((value) =>
-                                Usermanagement().storeNewUser(value, context))
+                                Usermanagement().storeNewUser(value,_role.toString(), context))
                             // print(value))
                             .catchError((e) {
-                           showDialog(
+                          showDialog(
                             context: context,
                             builder: (BuildContext context) {
                               return alert(e);
@@ -113,9 +145,9 @@ class _SignUpPageState extends State<SignUpPage> {
             )));
   }
 }
-// Create AlertDialog
-  AlertDialog alert(e) => AlertDialog(
-    title: Text("Sign up failed!"),
-    content: Text(e.toString()),
-  );
 
+// Create AlertDialog
+AlertDialog alert(e) => AlertDialog(
+      title: Text("Sign up failed!"),
+      content: Text(e.toString()),
+    );
