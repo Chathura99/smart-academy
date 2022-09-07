@@ -30,7 +30,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     alignment: Alignment.center,
                     padding: const EdgeInsets.all(10),
                     child: const Text(
-                      'Welcome to Unity Academy!',
+                      'Welcome to Smart Academy!',
                       style: TextStyle(
                           color: Colors.blue,
                           fontWeight: FontWeight.w500,

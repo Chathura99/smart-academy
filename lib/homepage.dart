@@ -12,7 +12,7 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(
-            "Unity Academy",
+            "Smart Academy",
           ),
           leading: IconButton(
             icon: Icon(Icons.menu),
