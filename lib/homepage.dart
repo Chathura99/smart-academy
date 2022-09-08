@@ -17,7 +17,7 @@ class HomePage extends StatelessWidget {
           leading: IconButton(
             icon: Icon(Icons.menu),
             onPressed: () {
-              //call method in here
+              //
             },
           ),
           actions: [
@@ -31,7 +31,7 @@ class HomePage extends StatelessWidget {
               icon: Icon(Icons.logout),
               onPressed: () {
                 FirebaseAuth.instance.signOut().then((value) {
-                  Navigator.pushReplacementNamed(context,'/landingpage');
+                  Navigator.pushReplacementNamed(context, '/landingpage');
                 }).catchError((e) {
                   print(e);
                 });
@@ -40,12 +40,12 @@ class HomePage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.more_vert),
               onPressed: () {
-                //call method
+                Navigator.pushNamed(context, '/profilepage');
               },
             ),
           ],
           flexibleSpace: Image.asset(
-            "assets/me1.png",
+            "assets/background.jpeg",
             fit: BoxFit.cover,
           ),
           bottom: PreferredSize(

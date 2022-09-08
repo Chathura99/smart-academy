@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ims/homepage.dart';
+import 'package:ims/screens/ProfileScreen.dart';
 import 'package:ims/signuppage.dart';
 
 import './loginpage.dart';
@@ -33,6 +34,7 @@ class MyApp extends StatelessWidget {
         '/landingpage': (BuildContext context) => const MyApp(),
         '/signup': (BuildContext context) => const SignUpPage(),
         '/home': (BuildContext context) => const HomePage(),
+        '/profilepage' : (BuildContext context) => ProfileScreen(),
       },
       debugShowCheckedModeBanner: false,
     );
