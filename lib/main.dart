@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:ims/homepage.dart';
 import 'package:ims/screens/ProfileScreen.dart';
+import 'package:ims/screens/articalscreen/add_artical.dart';
+import 'package:ims/screens/forumscreen/forum.dart';
+import 'package:ims/screens/forumscreen/forum_detail.dart';
 import 'package:ims/signuppage.dart';
 
 import './loginpage.dart';
@@ -35,6 +38,10 @@ class MyApp extends StatelessWidget {
         '/signup': (BuildContext context) => const SignUpPage(),
         '/home': (BuildContext context) => const HomePage(),
         '/profilepage' : (BuildContext context) => ProfileScreen(),
+        '/forum': (BuildContext context) => ForumPage(title: 'Forum',),
+         '/forum/1': (BuildContext context) => ForumDetailPage(),
+         '/addarticle': (BuildContext context) => const AddArtical(),
+
       },
       debugShowCheckedModeBanner: false,
     );
