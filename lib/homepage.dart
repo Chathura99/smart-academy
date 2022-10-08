@@ -1,5 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:ims/screens/articalscreen/artical.dart';
+import 'package:ims/screens/forumscreen/forum.dart';
+import 'package:ims/screens/quizscreen/quiz_menu.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -21,12 +24,7 @@ class HomePage extends StatelessWidget {
             },
           ),
           actions: [
-            IconButton(
-              icon: Icon(Icons.search),
-              onPressed: () {
-                //call method
-              },
-            ),
+            
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
@@ -38,7 +36,7 @@ class HomePage extends StatelessWidget {
               },
             ),
             IconButton(
-              icon: Icon(Icons.more_vert),
+              icon: Icon(Icons.people),
               onPressed: () {
                 Navigator.pushNamed(context, '/profilepage');
               },
@@ -52,86 +50,34 @@ class HomePage extends StatelessWidget {
             child: TabBar(
               tabs: [
                 Tab(
-                  icon: Icon(Icons.add),
-                  // text: "New",
+                  icon: Icon(Icons.quiz_rounded),
                 ),
                 Tab(
-                  icon: Icon(Icons.remove),
-                  // text: "Remove",
+                  icon: Icon(Icons.forum),
                 ),
                 Tab(
-                  icon: Icon(Icons.update),
-                  // text: "Update",
+                  icon: Icon(Icons.article),
                 ),
               ],
             ),
             preferredSize: Size.fromHeight(50),
           ),
-          //  backgroundColor: Colors.pinkAccent,
         ),
-        body: Padding(
-          padding: EdgeInsets.all(5.0),
-          child: TabBarView(
+        body: 
+           TabBarView(
             children: [
               //tab 1
-              tab1(),
+              
+              QuizMenu(),
               //tab 2
-              Container(
-                  color: Color.fromARGB(96, 218, 216, 216),
-                  padding: EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-                  child: Text("Remove Student")),
+              ForumPage(title: 'dge'),
               //tab 3
-              Text("Update Student Details"),
+              ArticalPage(),
             ],
           ),
-        ),
+        
       ),
     );
     // );
   }
-}
-
-Widget tab1() {
-  return Column(
-    // mainAxisAlignment: MainAxisAlignment.center,
-    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-    // crossAxisAlignment: CrossAxisAlignment.end,
-    children: [
-      Text("Add new Student"),
-      Text("List All"),
-      Text("Show Detail"),
-      Row(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          IconButton(
-            icon: Icon(
-              Icons.facebook,
-              color: Colors.blue,
-            ),
-            onPressed: () {
-              //call method
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.youtube_searched_for,
-              color: Colors.red,
-            ),
-            onPressed: () {
-              //call method
-            },
-          ),
-          IconButton(
-            icon: Icon(
-              Icons.whatsapp,
-              color: Colors.green,
-            ),
-            onPressed: () {
-              //call method
-            },
-          ),
-        ],
-      ),
-    ],
-  );
 }
