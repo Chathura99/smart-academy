@@ -5,7 +5,9 @@ import 'package:ims/screens/ProfileScreen.dart';
 import 'package:ims/screens/articalscreen/add_artical.dart';
 import 'package:ims/screens/forumscreen/forum.dart';
 import 'package:ims/screens/forumscreen/forum_detail.dart';
+import 'package:ims/screens/quizscreen/quiz_list.dart';
 import 'package:ims/signuppage.dart';
+import 'package:ims/teacherhomepage.dart';
 
 import './loginpage.dart';
 
@@ -41,6 +43,8 @@ class MyApp extends StatelessWidget {
         '/forum': (BuildContext context) => ForumPage(title: 'Forum',),
          '/forum/1': (BuildContext context) => ForumDetailPage(),
          '/addarticle': (BuildContext context) => const AddArtical(),
+         '/teacherhome': (BuildContext context) => const TeacherHomePage(),
+         '/quizlist': (BuildContext context) => const QuizList(),
 
       },
       debugShowCheckedModeBanner: false,
