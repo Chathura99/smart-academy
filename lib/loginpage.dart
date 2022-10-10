@@ -2,6 +2,7 @@ import 'dart:js_util';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -13,6 +14,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   late String _email;
   late String _password;
+  late String _role;
 
   // TextEditingController nameController = TextEditingController();
   // TextEditingController passwordController = TextEditingController();
@@ -90,9 +92,28 @@ class _LoginPageState extends State<LoginPage> {
                         FirebaseAuth.instance
                             .signInWithEmailAndPassword(
                                 email: _email, password: _password)
-                            .then((user) => Navigator.of(context)
-                                .pushReplacementNamed('/home'))
-                            .catchError((e) {
+                            .then((user) {
+                          // Query for get user role
+                          CollectionReference currentUser =
+                              FirebaseFirestore.instance.collection('users');
+                          FirebaseFirestore.instance
+                              .collection('users')
+                              .where('email', isEqualTo: _email)
+                              .get()
+                              .then((QuerySnapshot querySnapshot) {
+                            querySnapshot.docs.forEach((doc) {
+                              print(doc["role"]);
+                              setState(() {
+                                _role = doc["role"];
+                              });
+                            });
+                          });
+                          if (_role == "student") {
+                            Navigator.of(context)
+                                .pushReplacementNamed('/home');
+                          } else if(_role == "teacher"){Navigator.of(context)
+                                .pushReplacementNamed('/teacherhome');}
+                        }).catchError((e) {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
@@ -125,8 +146,7 @@ class _LoginPageState extends State<LoginPage> {
 }
 
 // Create AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text("Login failed!"),
-    content: Text("Invalid credentials"),
-  );
-
+AlertDialog alert = AlertDialog(
+  title: Text("Login failed!"),
+  content: Text("Invalid credentials"),
+);
