@@ -48,7 +48,6 @@ class _AddArticalState extends State<AddArtical> {
                 Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: TextField(
-                      obscureText: true,
                       controller: contentController,
                       decoration: const InputDecoration(
                         border: OutlineInputBorder(),
