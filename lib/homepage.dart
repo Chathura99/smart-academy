@@ -9,7 +9,7 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // SafeArea(
+    var type = "student";
     return DefaultTabController(
       length: 3,
       child: Scaffold(
@@ -24,7 +24,6 @@ class HomePage extends StatelessWidget {
             },
           ),
           actions: [
-            
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () {
@@ -63,21 +62,17 @@ class HomePage extends StatelessWidget {
             preferredSize: Size.fromHeight(50),
           ),
         ),
-        body: 
-           TabBarView(
-            children: [
-              //tab 1
-              
-              QuizMenu(),
-              //tab 2
-              ForumPage(title: 'dge'),
-              //tab 3
-              ArticalPage(),
-            ],
-          ),
-        
+        body: TabBarView(
+          children: [
+            //tab 1
+            QuizMenu(),
+            //tab 2
+            ForumPage(title: 'dge'),
+            //tab 3
+            ArticalPage(),
+          ],
+        ),
       ),
     );
-    // );
   }
 }
