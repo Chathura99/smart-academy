@@ -67,6 +67,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Forum 1"),
+        backgroundColor: Color.fromRGBO(39, 105, 171, 1),
       ),
       body: Column(
         children: <Widget>[

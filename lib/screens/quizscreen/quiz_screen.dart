@@ -29,6 +29,7 @@ class _QuizzScreenState extends State<QuizzScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Quiz"),
+        backgroundColor: Color.fromRGBO(39, 105, 171, 1)
       ),
       backgroundColor: Color.fromARGB(255, 97, 156, 245),
       body: Padding(
@@ -92,7 +93,7 @@ class _QuizzScreenState extends State<QuizzScreen> {
                             ? questions[index].answers!.values.toList()[i]
                                 ? Color.fromARGB(255, 0, 255, 8)
                                 : Color.fromARGB(255, 87, 32, 28)
-                            : Colors.blue,
+                            : Color.fromRGBO(39, 105, 171, 1),
                         onPressed: !answered
                             ? () {
                                 if (questions[index]
