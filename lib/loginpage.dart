@@ -3,6 +3,7 @@ import 'dart:js_util';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({Key? key}) : super(key: key);
@@ -32,7 +33,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text(
                       'Welcome to Smart Academy!',
                       style: TextStyle(
-                          color: Colors.blue,
+                          color: Color.fromRGBO(39, 105, 171, 1),
                           fontWeight: FontWeight.w500,
                           fontSize: 30),
                     )),
@@ -108,11 +109,22 @@ class _LoginPageState extends State<LoginPage> {
                               });
                             });
                           });
+                          // save user email in sharedpref
+
+                          saveUserEmail() async {
+                            SharedPreferences prefs =
+                                await SharedPreferences.getInstance();
+                            prefs.setString("useremail", _email);
+                          }
+
+                          saveUserEmail();
+
                           if (_role == "student") {
+                            Navigator.of(context).pushReplacementNamed('/home');
+                          } else if (_role == "teacher") {
                             Navigator.of(context)
-                                .pushReplacementNamed('/home');
-                          } else if(_role == "teacher"){Navigator.of(context)
-                                .pushReplacementNamed('/teacherhome');}
+                                .pushReplacementNamed('/teacherhome');
+                          }
                         }).catchError((e) {
                           showDialog(
                             context: context,
@@ -120,7 +132,6 @@ class _LoginPageState extends State<LoginPage> {
                               return alert;
                             },
                           );
-
                           // print(e);
                         });
                       },
