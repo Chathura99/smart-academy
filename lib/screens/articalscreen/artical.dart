@@ -1,18 +1,41 @@
 import 'package:flutter/material.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class ArticalPage extends StatefulWidget {
   @override
   _ArticalPageState createState() => _ArticalPageState();
 }
 
-var ForumPostArr = [
-  ForumPostEntry("Chathura Manohara", "2022-10-08 22:10", 7, 1,
-      "Earth and Water Lorem ipsum dolor sit amet, consectetur adipiscing elit,in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint."),
-  ForumPostEntry("Chathura Manohara", "2022-10-08 22:10", 5, 0,
-      "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt u."),
-];
+var ArticalPostArr = [];
 
 class _ArticalPageState extends State<ArticalPage> {
+  @override
+  void initState() {
+    getArticles();
+    super.initState();
+  }
+
+  void getArticles() async {
+    await FirebaseFirestore.instance
+        .collection('articles')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        setState(() {
+          ArticalPostArr.add(
+            ArticalPostEntry(
+                doc["username"],
+                DateTime.parse(doc["hour"].toDate().toString()).toString(),
+                doc["like"],
+                doc["unlike"],
+                doc["title"],
+                doc["text"]));
+         
+        });
+      });
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     var questionSection = Padding(
@@ -46,8 +69,8 @@ class _ArticalPageState extends State<ArticalPage> {
         padding: const EdgeInsets.all(8.0),
         child: ListView.builder(
           itemBuilder: (BuildContext context, int index) =>
-              ForumPost(ForumPostArr[index]),
-          itemCount: ForumPostArr.length,
+              ArticalPost(ArticalPostArr[index]),
+          itemCount: ArticalPostArr.length,
         ));
 
     return Scaffold(
@@ -65,21 +88,22 @@ class _ArticalPageState extends State<ArticalPage> {
   }
 }
 
-class ForumPostEntry {
+class ArticalPostEntry {
   final String username;
   final String hours;
   final int likes;
   final int dislikes;
   final String text;
+  final String title;
 
-  ForumPostEntry(
-      this.username, this.hours, this.likes, this.dislikes, this.text);
+  ArticalPostEntry(this.username, this.hours, this.likes, this.dislikes,
+      this.title, this.text);
 }
 
-class ForumPost extends StatelessWidget {
-  final ForumPostEntry entry;
+class ArticalPost extends StatelessWidget {
+  final ArticalPostEntry entry;
 
-  ForumPost(this.entry);
+  ArticalPost(this.entry);
 
   @override
   Widget build(BuildContext context) {
@@ -166,7 +190,11 @@ class ForumPost extends StatelessWidget {
                       bottomLeft: const Radius.circular(5.0),
                       bottomRight: const Radius.circular(5.0))),
               child: Column(
-                children: [Text("Title"),Image.asset('/earth.jpg'), Text(entry.text)],
+                children: [
+                  Text(entry.title),
+                  Image.asset('/earth.jpg'),
+                  Text(entry.text)
+                ],
               )),
         ],
       ),
