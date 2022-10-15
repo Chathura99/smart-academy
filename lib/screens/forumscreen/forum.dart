@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class ForumPage extends StatefulWidget {
   ForumPage({required this.title});
@@ -9,13 +10,34 @@ class ForumPage extends StatefulWidget {
   _ForumPageState createState() => new _ForumPageState();
 }
 
+var listItemsData = [];
+
 class _ForumPageState extends State<ForumPage> {
-  static final listItemsData = [
-    ListEntry("Forum 1", "test", "description 1", 54, 2, true),
-    ListEntry("Forum 2", "test", "description 2", 154, 3, false),
-    ListEntry("Forum 3", "test", "description 3", 971, 0, false),
-    ListEntry("Forum 4", "test", "description 4", 124, 2, true),
-  ];
+  @override
+  void initState() {
+    getForums();
+    super.initState();
+  }
+
+  void getForums() async {
+    await FirebaseFirestore.instance
+        .collection('forums')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        // print(doc.id);
+        setState(() {
+          listItemsData.add(ListEntry(
+            doc.id,
+            doc["title"],
+            doc["description"],
+            doc["username"],
+            DateTime.parse(doc["hour"].toDate().toString()).toString(),
+          ));
+        });
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -44,15 +66,12 @@ class _ForumPageState extends State<ForumPage> {
 }
 
 class ListEntry {
+  final String id;
   final String title;
-  final String icon;
   final String description;
-  final int views;
-  final int responses;
-  final bool answered;
-
-  ListEntry(this.title, this.icon, this.description, this.views, this.responses,
-      this.answered);
+  final String name;
+  final String date;
+  ListEntry(this.id, this.title, this.description, this.name, this.date);
 }
 
 class EntryItem extends StatelessWidget {
@@ -86,7 +105,8 @@ class EntryItem extends StatelessWidget {
           color: Color.fromARGB(255, 255, 255, 255),
         ),
         onTap: () {
-          Navigator.pushNamed(context, '/forum/1');
+          Navigator.pushNamed(context, '/forum/${entry.id}');
+          print( '/forum/${entry.id}');
         },
       ),
     );
