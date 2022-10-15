@@ -15,6 +15,7 @@ var listItemsData = [];
 class _ForumPageState extends State<ForumPage> {
   @override
   void initState() {
+    listItemsData = [];
     getForums();
     super.initState();
   }
@@ -105,8 +106,8 @@ class EntryItem extends StatelessWidget {
           color: Color.fromARGB(255, 255, 255, 255),
         ),
         onTap: () {
-          Navigator.pushNamed(context, '/forum/${entry.id}');
-          print( '/forum/${entry.id}');
+          Navigator.pushNamed(context, '/forumdetails',arguments: {'forumid': entry.id},);
+          // print( '/forumdetails/${entry.id}');
         },
       ),
     );
