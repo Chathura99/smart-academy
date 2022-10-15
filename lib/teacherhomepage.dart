@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:ims/screens/articalscreen/artical.dart';
+import 'package:ims/screens/classfee/payment_details.dart';
 import 'package:ims/screens/forumscreen/add_forum.dart';
 import 'package:ims/screens/quizscreen/add_question.dart';
 
@@ -11,7 +12,7 @@ class TeacherHomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var type = "student";
     return DefaultTabController(
-      length: 3,
+      length: 4,
       child: Scaffold(
         appBar: AppBar(
           title: Text(
@@ -57,6 +58,9 @@ class TeacherHomePage extends StatelessWidget {
                 Tab(
                   icon: Icon(Icons.article),
                 ),
+                Tab(
+                  icon: Icon(Icons.payment_rounded),
+                ),
               ],
             ),
             preferredSize: Size.fromHeight(50),
@@ -70,6 +74,8 @@ class TeacherHomePage extends StatelessWidget {
             AddForum(),
             //tab 3
             ArticalPage(),
+            // tab 4
+            PaymentDetails()
           ],
         ),
       ),
