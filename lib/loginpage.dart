@@ -129,7 +129,7 @@ class _LoginPageState extends State<LoginPage> {
                           showDialog(
                             context: context,
                             builder: (BuildContext context) {
-                              return alert;
+                              return alert(context);
                             },
                           );
                           // print(e);
@@ -156,8 +156,20 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-// Create AlertDialog
-AlertDialog alert = AlertDialog(
-  title: Text("Login failed!"),
-  content: Text("Invalid credentials"),
-);
+// Create AlertDialog for invalid credentials
+AlertDialog alert(context) => AlertDialog(
+      title: Text("Login failed!"),
+      content: Text("Invalid credentials."),
+      actions: <Widget>[
+        TextButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Container(
+            color: Color.fromARGB(255, 255, 255, 255),
+            padding: const EdgeInsets.all(5),
+            child: const Text("OK"),
+          ),
+        ),
+      ],
+    );
