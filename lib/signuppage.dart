@@ -14,6 +14,7 @@ enum Userrole { student, teacher }
 class _SignUpPageState extends State<SignUpPage> {
   late String _email;
   late String _password;
+  late String _username;
   Userrole? _role = Userrole.teacher;
 
   // TextEditingController nameController = TextEditingController();
@@ -54,6 +55,20 @@ class _SignUpPageState extends State<SignUpPage> {
                       onChanged: (value) {
                         setState(() {
                           _email = value;
+                        });
+                      }),
+                ),
+                Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                      // controller: passwordController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Username',
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _username = value;
                         });
                       }),
                 ),
@@ -113,8 +128,8 @@ class _SignUpPageState extends State<SignUpPage> {
                         FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: _email, password: _password)
-                            .then((value) =>
-                                Usermanagement().storeNewUser(value,_role.toString(), context))
+                            .then((value) => Usermanagement()
+                                .storeNewUser(value, _role.toString(),_username.toString(), context))
                             // print(value))
                             .catchError((e) {
                           showDialog(
