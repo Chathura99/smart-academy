@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
         '/home': (BuildContext context) => const HomePage(),
         '/profilepage' : (BuildContext context) => ProfileScreen(),
         '/forum': (BuildContext context) => ForumPage(title: 'Forum',),
-         '/forum/1': (BuildContext context) => ForumDetailPage(),
+         '/forumdetails': (BuildContext context) => ForumDetailPage(),
          '/addarticle': (BuildContext context) => const AddArtical(),
          '/teacherhome': (BuildContext context) => const TeacherHomePage(),
          '/quizlist': (BuildContext context) => const QuizList(),
