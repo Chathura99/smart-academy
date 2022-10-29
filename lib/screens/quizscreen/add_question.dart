@@ -1,4 +1,7 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class AddQuestion extends StatefulWidget {
   const AddQuestion({Key? key}) : super(key: key);
@@ -13,12 +16,14 @@ class _AddQuestionState extends State<AddQuestion> {
   late String _ans2;
   late String _ans3;
   late String _ans4;
+  late String _ans;
 
   TextEditingController questionController = TextEditingController();
   TextEditingController ans1Controller = TextEditingController();
   TextEditingController ans2Controller = TextEditingController();
   TextEditingController ans3Controller = TextEditingController();
   TextEditingController ans4Controller = TextEditingController();
+  TextEditingController ansController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -105,16 +110,51 @@ class _AddQuestionState extends State<AddQuestion> {
                       }),
                 ),
                 Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: TextField(
+                      controller: ansController,
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Correct Answer | 1 2 3 or 4',
+                      ),
+                      onChanged: (value) {
+                        setState(() {
+                          _ans = value;
+                        });
+                      }),
+                ),
+                Container(
                   height: 50,
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: ElevatedButton(
                     child: const Text('Add'),
                     onPressed: () {
                       print(ans1Controller.text);
-                      print(ans2Controller.text);
+                      print(ans1Controller.text);
                       print(ans3Controller.text);
                       print(ans4Controller.text);
-                      print(questionController.text);
+                      print(ansController.text);
+                      print(ansController.text);
+
+                      FirebaseFirestore.instance.collection('questions').add({
+                        "question": questionController.text,
+                        "ans1": ans1Controller.text,
+                        "ans2": ans2Controller.text,
+                        "ans3": ans3Controller.text,
+                        "ans4": ans4Controller.text,
+                        "ans1correctornot":
+                            (ansController.text == "1") ? true : false,
+                        "ans2correctornot":
+                            (ansController.text == "2") ? true : false,
+                        "ans3correctornot":
+                            (ansController.text == "3") ? true : false,
+                        "ans4correctornot":
+                            (ansController.text == "4") ? true : false,
+                      }).then((value) {
+                        print("saved"); 
+                      }).catchError((e) {
+                        print(e);
+                      });
                     },
                   ),
                 ),
