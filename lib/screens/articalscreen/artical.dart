@@ -11,6 +11,7 @@ var ArticalPostArr = [];
 class _ArticalPageState extends State<ArticalPage> {
   @override
   void initState() {
+    ArticalPostArr = [];
     getArticles();
     super.initState();
   }
@@ -22,15 +23,14 @@ class _ArticalPageState extends State<ArticalPage> {
         .then((QuerySnapshot querySnapshot) {
       querySnapshot.docs.forEach((doc) {
         setState(() {
-          ArticalPostArr.add(
-            ArticalPostEntry(
-                doc["username"],
-                DateTime.parse(doc["hour"].toDate().toString()).toString(),
-                doc["like"],
-                doc["unlike"],
-                doc["title"],
-                doc["text"]));
-         
+          ArticalPostArr.add(ArticalPostEntry(
+              doc.id,
+              doc["username"],
+              DateTime.parse(doc["hour"].toDate().toString()).toString(),
+              doc["like"],
+              doc["unlike"],
+              doc["title"],
+              doc["text"]));
         });
       });
     });
@@ -89,6 +89,7 @@ class _ArticalPageState extends State<ArticalPage> {
 }
 
 class ArticalPostEntry {
+  final String id;
   final String username;
   final String hours;
   final int likes;
@@ -96,8 +97,8 @@ class ArticalPostEntry {
   final String text;
   final String title;
 
-  ArticalPostEntry(this.username, this.hours, this.likes, this.dislikes,
-      this.title, this.text);
+  ArticalPostEntry(this.id, this.username, this.hours, this.likes,
+      this.dislikes, this.title, this.text);
 }
 
 class ArticalPost extends StatelessWidget {
@@ -152,7 +153,23 @@ class ArticalPost extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Icon(Icons.thumb_up, color: Colors.white),
+                      child: IconButton(
+                        icon: Icon(Icons.thumb_up, color: Colors.white),
+                        onPressed: () {
+                          print("liked!" + entry.id);
+                          FirebaseFirestore.instance
+                              .collection('articles')
+                              .doc(entry.id)
+                              .update({
+                            'like': entry.likes + 1,
+                          }).then((value) {
+                            // Navigator.pop(context);
+                            print("liked");
+                          }).catchError((e) {
+                            print(e);
+                          });
+                        },
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2.0),
@@ -165,7 +182,23 @@ class ArticalPost extends StatelessWidget {
                     ),
                     Padding(
                       padding: const EdgeInsets.all(2.0),
-                      child: Icon(Icons.thumb_down, color: Colors.white),
+                      child: IconButton(
+                        icon: Icon(Icons.thumb_down, color: Colors.white),
+                        onPressed: () {
+                          print("disliked!" + entry.id);
+                          FirebaseFirestore.instance
+                              .collection('articles')
+                              .doc(entry.id)
+                              .update({
+                            'unlike': entry.likes + 1,
+                          }).then((value) {
+                            // Navigator.pop(context);
+                            print("disliked");
+                          }).catchError((e) {
+                            print(e);
+                          });
+                        },
+                      ),
                     ),
                     Padding(
                       padding: const EdgeInsets.only(right: 8.0, left: 2.0),
