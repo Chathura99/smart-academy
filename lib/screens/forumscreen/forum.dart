@@ -106,7 +106,7 @@ class EntryItem extends StatelessWidget {
           color: Color.fromARGB(255, 255, 255, 255),
         ),
         onTap: () {
-          Navigator.pushNamed(context, '/forumdetails',arguments: {'forumid': entry.id},);
+          Navigator.pushNamed(context, '/forumdetails',arguments: {'forumid': entry.id,'forumtitle':entry.title});
           // print( '/forumdetails/${entry.id}');
         },
       ),
