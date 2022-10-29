@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class QuizList extends StatefulWidget {
   const QuizList({Key? key}) : super(key: key);
@@ -10,14 +11,30 @@ class QuizList extends StatefulWidget {
 }
 
 class _QuizListState extends State<QuizList> {
-  var QuestionArr = [
-    {"Q1", "e", "f", "g", "h"},
-    {"Q2", "a", "b", "c", "d"},
-    {"Q3", "e", "f", "g", "h"},
-    {"Q4", "a", "b", "c", "d"},
-    {"Q5", "e", "f", "g", "h"},
-    {"Q4", "a", "b", "c", "d"},
-  ];
+  void initState() {
+    getQuestions();
+    super.initState();
+  }
+
+  void getQuestions() async {
+    await FirebaseFirestore.instance
+        .collection('questions')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        setState(() {
+          QuestionArr.add({
+            doc.get("question"),
+            // get question from index
+            doc.get("ans1"), doc.get("ans2"), doc.get("ans3"), doc.get("ans4"),
+            // doc.id,
+          });
+        });
+      });
+    });
+  }
+
+  var QuestionArr = [];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -61,12 +78,19 @@ class _QuizListState extends State<QuizList> {
                           ),
                         ),
                         Row(
-                        
-                          children: const <Widget>[
+                          children: <Widget>[
                             Padding(
                               padding: EdgeInsets.all(2.0),
-                              child: Icon(Icons.delete, color: Colors.black),
-                              
+                              child:
+                                  // Icon(Icons.delete, color: Colors.black),
+                                  IconButton(
+                                icon: Icon(Icons.delete, color: Colors.black),
+                                onPressed: () {
+                                  print("deleted->" +
+                                      QuestionArr[index].toList()[5]);
+                                  // delete query
+                                },
+                              ),
                             ),
                           ],
                         )
@@ -84,6 +108,7 @@ class _QuizListState extends State<QuizList> {
                         Text(QuestionArr[index].toList()[2]),
                         Text(QuestionArr[index].toList()[3]),
                         Text(QuestionArr[index].toList()[4]),
+                        // Text(QuestionArr[index].toList()[5]),
                       ],
                     ),
                   ),
