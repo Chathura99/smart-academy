@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:ims/screens/quizscreen/data/questions.dart';
+import 'package:ims/screens/quizscreen/model/question_model.dart';
 import 'package:ims/screens/quizscreen/quiz_menu.dart';
 import 'package:ims/screens/quizscreen/result_screen.dart';
+import "package:cloud_firestore/cloud_firestore.dart";
 
 class QuizzScreen extends StatefulWidget {
   const QuizzScreen(int i, {Key? key}) : super(key: key);
@@ -9,6 +10,8 @@ class QuizzScreen extends StatefulWidget {
   @override
   _QuizzScreenState createState() => _QuizzScreenState();
 }
+
+List<QuestionModel> questions = [];
 
 class _QuizzScreenState extends State<QuizzScreen> {
   int question_pos = 0;
@@ -19,18 +22,42 @@ class _QuizzScreenState extends State<QuizzScreen> {
   bool answered = false;
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _controller = PageController(initialPage: 0);
+    questions = [];
+    getQuestions();
+  }
+
+  void getQuestions() async {
+    await FirebaseFirestore.instance
+        .collection('questions')
+        .get()
+        .then((QuerySnapshot querySnapshot) {
+      querySnapshot.docs.forEach((doc) {
+        setState(() {
+          questions.add(
+            QuestionModel(
+              doc.get("question"),
+              {
+                doc.get("ans1"): doc.get("ans1correctornot"),
+                doc.get("ans2"): doc.get("ans2correctornot"),
+                doc.get("ans3"): doc.get("ans3correctornot"),
+                doc.get("ans4"): doc.get("ans4correctornot"),
+              },
+              // get question from index
+            ),
+          );
+        });
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Quiz"),
-        backgroundColor: Color.fromRGBO(39, 105, 171, 1)
-      ),
+          title: Text("Quiz"),
+          backgroundColor: Color.fromRGBO(39, 105, 171, 1)),
       backgroundColor: Color.fromARGB(255, 97, 156, 245),
       body: Padding(
           padding: const EdgeInsets.all(12.0),
@@ -55,11 +82,11 @@ class _QuizzScreenState extends State<QuizzScreen> {
                   SizedBox(
                     width: double.infinity,
                     child: Text(
-                      "Question ${index + 1}/5 \nQuesion Set : ",
+                      "Question ${index + 1}/ ${questions.length}",
                       textAlign: TextAlign.start,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 10.0,
+                        fontSize: 20.0,
                       ),
                     ),
                   ),
