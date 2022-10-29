@@ -30,6 +30,8 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
         <String, dynamic>{}) as Map;
 
     print("Clicked->" + arguments['forumid']);
+        print("Clicked->" + arguments['forumtitle']);
+
 
     void getForums(String forumid) async {
       ForumPostReplyArr.clear();
@@ -74,7 +76,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
       child: Column(
         children: <Widget>[
           Text(
-            "How do I become a expert in programming as well as design ??",
+            arguments['forumtitle'],
             textScaleFactor: 1.5,
             style: TextStyle(fontWeight: FontWeight.bold),
           ),
@@ -121,7 +123,7 @@ class _ForumDetailPageState extends State<ForumDetailPage> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text("Forum 1"),
+        title: Text("Forum"),
         backgroundColor: Color.fromRGBO(39, 105, 171, 1),
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
