@@ -23,6 +23,8 @@ class _SignUpPageState extends State<SignUpPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromARGB(66, 238, 252, 250),
+
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
@@ -33,7 +35,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     child: const Text(
                       'Welcome to Smart Academy!',
                       style: TextStyle(
-                          color: Colors.blue,
+                          color: Color.fromARGB(255, 0, 60, 108),
                           fontWeight: FontWeight.w500,
                           fontSize: 30),
                     )),
@@ -116,7 +118,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   ],
                 ),
                 Container(
-                    height: 50,
+                    height: 40,
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: ElevatedButton(
                       child: const Text('Sign Up'),
@@ -128,8 +130,11 @@ class _SignUpPageState extends State<SignUpPage> {
                         FirebaseAuth.instance
                             .createUserWithEmailAndPassword(
                                 email: _email, password: _password)
-                            .then((value) => Usermanagement()
-                                .storeNewUser(value, _role.toString(),_username.toString(), context))
+                            .then((value) => Usermanagement().storeNewUser(
+                                value,
+                                _role.toString(),
+                                _username.toString(),
+                                context))
                             // print(value))
                             .catchError((e) {
                           showDialog(
@@ -148,7 +153,7 @@ class _SignUpPageState extends State<SignUpPage> {
                     TextButton(
                       child: const Text(
                         'Sign in',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 15),
                       ),
                       onPressed: () {
                         Navigator.pop(context);

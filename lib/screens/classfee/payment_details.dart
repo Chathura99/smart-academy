@@ -19,6 +19,7 @@ class _PaymentDetailsState extends State<PaymentDetails> {
   }
 
   void getPayments() async {
+    listItemsData = [];
     await FirebaseFirestore.instance
         .collection('payments')
         .get()

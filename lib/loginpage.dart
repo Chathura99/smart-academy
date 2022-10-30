@@ -23,6 +23,7 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Color.fromARGB(66, 238, 252, 250),
         body: Padding(
             padding: const EdgeInsets.all(10),
             child: ListView(
@@ -33,7 +34,7 @@ class _LoginPageState extends State<LoginPage> {
                     child: const Text(
                       'Welcome to Smart Academy!',
                       style: TextStyle(
-                          color: Color.fromRGBO(39, 105, 171, 1),
+                          color: Color.fromARGB(255, 0, 60, 108),
                           fontWeight: FontWeight.w500,
                           fontSize: 30),
                     )),
@@ -48,7 +49,7 @@ class _LoginPageState extends State<LoginPage> {
                   padding: const EdgeInsets.all(10),
                   child: TextField(
                       // controller: nameController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Email',
                       ),
@@ -63,7 +64,7 @@ class _LoginPageState extends State<LoginPage> {
                   child: TextField(
                       obscureText: true,
                       // controller: passwordController,
-                      decoration: const InputDecoration(
+                      decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: 'Password',
                       ),
@@ -73,16 +74,10 @@ class _LoginPageState extends State<LoginPage> {
                         });
                       }),
                 ),
-                TextButton(
-                  onPressed: () {
-                    //forgot password screen
-                  },
-                  child: const Text(
-                    'Forgot Password',
-                  ),
-                ),
                 Container(
                     height: 50,
+                    margin: const EdgeInsets.only(
+                        top: 10.0),
                     padding: const EdgeInsets.fromLTRB(10, 0, 10, 0),
                     child: ElevatedButton(
                       child: const Text('Login'),
@@ -107,6 +102,13 @@ class _LoginPageState extends State<LoginPage> {
                               setState(() {
                                 _role = doc["role"];
                               });
+                              if (_role == "student") {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/home');
+                              } else if (_role == "teacher") {
+                                Navigator.of(context)
+                                    .pushReplacementNamed('/teacherhome');
+                              }
                             });
                           });
                           // save user email in sharedpref
@@ -118,13 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                           }
 
                           saveUserEmail();
-
-                          if (_role == "student") {
-                            Navigator.of(context).pushReplacementNamed('/home');
-                          } else if (_role == "teacher") {
-                            Navigator.of(context)
-                                .pushReplacementNamed('/teacherhome');
-                          }
+                          // redirect home page based on user
                         }).catchError((e) {
                           showDialog(
                             context: context,
@@ -143,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                     TextButton(
                       child: const Text(
                         'Sign Up',
-                        style: TextStyle(fontSize: 20),
+                        style: TextStyle(fontSize: 15),
                       ),
                       onPressed: () {
                         Navigator.pushNamed(context, '/signup');

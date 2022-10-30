@@ -27,7 +27,7 @@ class _QuizListState extends State<QuizList> {
             doc.get("question"),
             // get question from index
             doc.get("ans1"), doc.get("ans2"), doc.get("ans3"), doc.get("ans4"),
-            // doc.id,
+            doc.id,
           });
         });
       });
@@ -88,7 +88,7 @@ class _QuizListState extends State<QuizList> {
                                 onPressed: () {
                                   print("deleted->" +
                                       QuestionArr[index].toList()[5]);
-                                  // delete query
+                                  FirebaseFirestore.instance.collection('questions').doc(QuestionArr[index].toList()[5]).delete();
                                 },
                               ),
                             ),
