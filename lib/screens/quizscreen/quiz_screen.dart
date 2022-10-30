@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:ims/screens/quizscreen/model/question_model.dart';
+// import 'package:ims/screens/quizscreen/model/question_model.dart';
 import 'package:ims/screens/quizscreen/quiz_menu.dart';
 import 'package:ims/screens/quizscreen/result_screen.dart';
 import "package:cloud_firestore/cloud_firestore.dart";
@@ -10,6 +10,12 @@ class QuizzScreen extends StatefulWidget {
   @override
   _QuizzScreenState createState() => _QuizzScreenState();
 }
+class QuestionModel {
+  String? question;
+  Map<String, bool>? answers;
+  QuestionModel(this.question, this.answers);
+}
+
 
 List<QuestionModel> questions = [];
 
